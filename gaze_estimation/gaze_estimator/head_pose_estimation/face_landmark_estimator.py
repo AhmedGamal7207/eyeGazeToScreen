@@ -34,7 +34,7 @@ class LandmarkEstimator:
         for bbox in bboxes:
             predictions = self.predictor(image[:, :, ::-1], bbox)
             landmarks = np.array([(pt.x, pt.y) for pt in predictions.parts()],
-                                 dtype=np.float)
+                                 dtype=np.float64)
             # THIS IS FOR AVERAGING OVER LANDMARK FRAMES!
             if self.AVG_LANDMARKS:
                 self.landmark_holder.append(landmarks)
@@ -44,6 +44,6 @@ class LandmarkEstimator:
             # --------------------------------------
             bbox = np.array([[bbox.left(), bbox.top()],
                              [bbox.right(), bbox.bottom()]],
-                            dtype=np.float)
+                            dtype=np.float64)
             detected.append(Face(bbox, landmarks))
         return detected
